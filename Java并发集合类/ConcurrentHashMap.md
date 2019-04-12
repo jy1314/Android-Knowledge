@@ -30,6 +30,7 @@ JDK1.8的实现已经抛弃了Segment分段锁机制，利用CAS+Synchronized来
 ![ConcurrentHashMap的结构](https://codingsky.oss-cn-hangzhou.aliyuncs.com/androidos/articles/content/convert/64c189d097e973e3008ba71be82f74db.dat)
 
 话不多说，上源码：
+
 ###构造：
 
 ```
@@ -58,7 +59,9 @@ JDK1.8的实现已经抛弃了Segment分段锁机制，利用CAS+Synchronized来
 tableSizeFor(int c)的原理：将c最高位以下通过|=运算全部变成1，最后返回的时候，返回n+1；
 eg:当输入为25的时候，n等于24，转成二进制为1100，右移1位为0110，将1100与0110进行或("|")操作，得到1110。接下来右移两位得11，再进行或操作得1111，接下来操作n的值就不会变化了。最后返回的时候，返回n+1，也就是10000，十进制为32。按照这种逻辑得到2的n次幂的数。
 那么为什么要先-1再+1呢？输入若是为0，那么不论怎么操作，n还是0，但是HashMap的容量只有大于0时才有意义。
+
 ###table初始化：
+
 table初始化操作会延缓到第一次put行为。但是put是可以并发执行的，那么是如何实现table只初始化一次的？接着上源码：
 
 ```
@@ -192,6 +195,7 @@ table初始化操作会延缓到第一次put行为。但是put是可以并发执
 
 ```
 
+##table扩容
 
 
 
