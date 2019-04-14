@@ -23,11 +23,11 @@ HashTable容器在竞争激烈的并发环境下表现出效率低下的原因�
 ConcurrentHashMap是由Segment数组结构和HashEntry数组结构组成。Segment是一种可重入锁ReentrantLock，在ConcurrentHashMap里扮演锁的角色，HashEntry则用于存储键值对数据。一个ConcurrentHashMap里包含一个Segment数组，Segment的结构和HashMap类似，是一种数组和链表结构， 一个Segment里包含一个HashEntry数组，每个HashEntry是一个链表结构的元素， 每个Segment守护者一个HashEntry数组里的元素,当对HashEntry数组的数据进行修改时，必须首先获得它对应的Segment锁。
 
 
-![ConcurrentHashMap的结构](https://github.com/jy1314/Android-Knowledge/tree/master/util/picture/ConcurrentHashMap1.jpg )
+![ConcurrentHashMap的结构](https://github.com/jy1314/Android-Knowledge/blob/master/util/picture/ConcurrentHashMap1.jpg )
 
 JDK1.8的实现已经抛弃了Segment分段锁机制，利用CAS+Synchronized来保证并发更新的安全。数据结构采用：数组+链表+红黑树。
 
-![ConcurrentHashMap的结构](https://github.com/jy1314/Android-Knowledge/tree/master/util/picture/ConcurrentHashMap2.jpg )
+![ConcurrentHashMap的结构](https://github.com/jy1314/Android-Knowledge/blob/master/util/picture/ConcurrentHashMap2.png )
 
 话不多说，上源码：
 
